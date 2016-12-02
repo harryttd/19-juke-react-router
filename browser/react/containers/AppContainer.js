@@ -22,7 +22,7 @@ export default class AppContainer extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
-    this.deselectAlbum = this.deselectAlbum.bind(this);
+    // this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
   componentDidMount () {
@@ -98,30 +98,51 @@ export default class AppContainer extends Component {
       }));
   }
 
-  deselectAlbum () {
-    this.setState({ selectedAlbum: {}});
-  }
+  // deselectAlbum () {
+  //   this.setState({ selectedAlbum: {}});
+  // }
 
   render () {
+    // console.log(this.props.children);
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">
-          <Sidebar deselectAlbum={this.deselectAlbum} />
+          <Sidebar />
         </div>
         <div className="col-xs-10">
-        {
-          this.state.selectedAlbum.id ?
-          <Album
-            album={this.state.selectedAlbum}
-            currentSong={this.state.currentSong}
-            isPlaying={this.state.isPlaying}
-            toggleOne={this.toggleOne}
-          /> :
-          <Albums
-            albums={this.state.albums}
-            selectAlbum={this.selectAlbum}
-          />
-        }
+          {
+            this.props.children ?
+            React.cloneElement(this.props.children, {
+
+              album: this.state.selectedAlbum,
+              currentSong: this.state.currentSong,
+              isPlaying: this.state.isPlaying,
+              toggle: this.toggleOne,
+
+              albums: this.state.albums,
+              selectAlbum: this.selectAlbum
+            })
+            : null
+          }
+          {/*
+            this.state.selectedAlbum.id ?
+            <Album
+              album={this.state.selectedAlbum}
+              currentSong={this.state.currentSong}
+              isPlaying={this.state.isPlaying}
+              toggleOne={this.toggleOne}
+            /> :
+            <Albums
+              albums={this.state.albums}
+              selectAlbum={this.selectAlbum}
+            />
+          */}
+          {/*
+            <AppContainer>
+              <Album />
+              <Albums />
+            </AppContainer>
+          */}
         </div>
         <Player
           currentSong={this.state.currentSong}
