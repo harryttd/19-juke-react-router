@@ -131,7 +131,8 @@ export default class AppContainer extends Component {
               albums: this.state.albums,
               selectAlbum: this.selectAlbum,
 
-              artists: this.state.artists
+              artists: this.state.artists,
+              selectedArtist: this.state.selectedArtist
 
             })
             : null
